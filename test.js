@@ -16,9 +16,32 @@ const {expect} = require('chai')
 // - apply generation rule to a cell (keep it alive, kill it or make it live again)
 // - count alive cells from a cell list
 
+function countAliveCells(cells) {
+   const reducer = (previousValue, currentValue) => currentValue === "*" ? previousValue+1 : previousValue ;
+   return cells.reduce(reducer, 0);
+}
 
-it('should do foo', () => {
+describe('game of life', function() {
+   it('should count alive cells from a cell list', () => {
+      // given
+      const cells = [".", "*", ".", "*", "*"];
 
-   // then
-   expect(true).to.equal(false)
-})
+      // when
+      const result = countAliveCells(cells);
+
+      // then
+      expect(result).to.equal(3);
+   });
+
+   it('should count alive cell from a cell list', () => {
+      // given
+      const cells = [".", ".", ".", ".", "*"];
+
+      // when
+      const result = countAliveCells(cells);
+
+      // then
+      expect(result).to.equal(1);
+   });
+});
+
