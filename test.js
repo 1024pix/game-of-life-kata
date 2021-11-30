@@ -1,4 +1,4 @@
-const {expect} = require('chai')
+const { expect } = require('chai');
 
 // Business rules
 // 1. Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
@@ -17,31 +17,42 @@ const {expect} = require('chai')
 // - count alive cells from a cell list
 
 function countAliveCells(cells) {
-   const reducer = (previousValue, currentValue) => currentValue === "*" ? previousValue+1 : previousValue ;
-   return cells.reduce(reducer, 0);
+  const reducer = (previousValue, currentValue) =>
+    currentValue === '*' ? previousValue + 1 : previousValue;
+  return cells.reduce(reducer, 0);
 }
 
-describe('game of life', function() {
-   it('should count alive cells from a cell list', () => {
-      // given
-      const cells = [".", "*", ".", "*", "*"];
+describe('game of life', function () {
+  it('should count alive cells from a cell list', () => {
+    // given
+    const cells = ['.', '*', '.', '*', '*'];
 
-      // when
-      const result = countAliveCells(cells);
+    // when
+    const result = countAliveCells(cells);
 
-      // then
-      expect(result).to.equal(3);
-   });
+    // then
+    expect(result).to.equal(3);
+  });
 
-   it('should count alive cell from a cell list', () => {
-      // given
-      const cells = [".", ".", ".", ".", "*"];
+  it('should count alive cell from a cell list', () => {
+    // given
+    const cells = ['.', '.', '.', '.', '*'];
 
-      // when
-      const result = countAliveCells(cells);
+    // when
+    const result = countAliveCells(cells);
 
-      // then
-      expect(result).to.equal(1);
-   });
+    // then
+    expect(result).to.equal(1);
+  });
+
+  it('should count no alive cell from a cell list', () => {
+    // given
+    const cells = ['.', '.', '.', '.', '.'];
+
+    // when
+    const result = countAliveCells(cells);
+
+    // then
+    expect(result).to.equal(0);
+  });
 });
-
