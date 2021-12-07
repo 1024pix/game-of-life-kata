@@ -33,7 +33,7 @@ function countAliveNeighbours(cellMatrix, x, y) {
   const left = getStatus(cellMatrix, x, y-1);
   const cells = [ topLeft, top, topRight, right, bottomRight, bottom, bottomLeft, left ];
 
-return countAliveCells(cells);
+  return countAliveCells(cells);
 }
 
 function getStatus(cellMatrix, x, y) {
@@ -132,19 +132,85 @@ describe('game of life', function () {
       expect(result).to.equal(6);
     });
 
-    it('should return 6 if top 2 left cells are dead', () => {
+    it('should return 0 for top left corner', () => {
       // given
       const cellMatrix = [
-        ['.', '.', '*'],
-        ['*', '.', '*'],
-        ['*', '*', '*'],
+        ['.', '.', '*', '.'],
+        ['.', '.', '.', '.'],
+        ['*', '*', '*', '*'],
+        ['.', '.', '*', '.'],
       ];
 
       // when
       const result = countAliveNeighbours(cellMatrix, 0, 0);
 
       // then
+      expect(result).to.equal(0);
+    });
+
+    it('should return 1 for top right corner', () => {
+      // given
+      const cellMatrix = [
+        ['.', '.', '*', '.'],
+        ['.', '.', '.', '.'],
+        ['*', '*', '*', '*'],
+        ['.', '.', '*', '.'],
+      ];
+
+      // when
+      const result = countAliveNeighbours(cellMatrix, 3, 0);
+
+      // then
       expect(result).to.equal(1);
+    });
+
+    it('should return 2 for bottom left corner', () => {
+      // given
+      const cellMatrix = [
+        ['.', '.', '*', '.'],
+        ['.', '.', '.', '.'],
+        ['*', '*', '*', '*'],
+        ['.', '.', '*', '.'],
+      ];
+
+      // when
+      const result = countAliveNeighbours(cellMatrix, 0, 3);
+
+      // then
+      expect(result).to.equal(2);
+    });
+
+    it('should return 3 for bottom right corner', () => {
+      // given
+      const cellMatrix = [
+        ['.', '.', '*', '.'],
+        ['.', '.', '.', '.'],
+        ['*', '*', '*', '*'],
+        ['.', '.', '*', '.'],
+      ];
+
+      // when
+      const result = countAliveNeighbours(cellMatrix, 3, 3);
+
+      // then
+      expect(result).to.equal(3);
+    });
+
+    it('should return 0 for matrix center', () => {
+      // given
+      const cellMatrix = [
+        ['*', '*', '*', '*', '*'],
+        ['*', '.', '.', '.', '*'],
+        ['*', '.', '.', '.', '*'],
+        ['*', '.', '.', '.', '*'],
+        ['*', '*', '*', '*', '*'],
+      ];
+
+      // when
+      const result = countAliveNeighbours(cellMatrix, 2, 2);
+
+      // then
+      expect(result).to.equal(0);
     });
   });
 });
