@@ -6,7 +6,7 @@ const { expect } = require('chai');
 // 3. Any live cell with two or three live neighbours lives on to the next generation.
 // 4. Any dead cell with exactly three live neighbours becomes a live cell.
 
-// Implementation contraints
+// Implementation constraints
 // - grid is 2-dimensional
 // - grid size is 9*9
 //
@@ -15,6 +15,22 @@ const { expect } = require('chai');
 // - handle edge cases
 // - apply generation rule to a cell (keep it alive, kill it or make it live again)
 // - count alive cells from a cell list
+
+function calculateNextGeneration(cellMatrix) {
+  const newCellMatrix = [...cellMatrix];
+
+  for(let i = 0; i < cellMatrix.length; i++) {
+    for (let j = 0; j < cellMatrix[i].length; j++) {
+      const cell = cellMatrix[i][j];
+      const aliveNeighbours = countAliveNeighbours(cellMatrix, i, j);
+      if (cell === '*' && aliveNeighbours < 2) {
+        newCellMatrix[i][j] = '.';
+      }
+    }
+  }
+
+  return newCellMatrix;
+}
 
 function countAliveCells(cells) {
   const reducer = (previousValue, currentValue) =>
@@ -53,37 +69,62 @@ function getStatus(cellMatrix, x, y) {
 }
 
 describe('game of life', function () {
-  it('should count alive cells from a cell list', () => {
-    // given
-    const cells = ['.', '*', '.', '*', '*'];
 
-    // when
-    const result = countAliveCells(cells);
+  describe('#next', function() {
+    it('verifies rule 1', function() {
+      // given
+      const cellMatrix = [
+        ['.', '.', '.'],
+        ['.', '*', '.'],
+        ['.', '.', '.'],
+      ];
 
-    // then
-    expect(result).to.equal(3);
+      // when
+      const nextGeneration = calculateNextGeneration(cellMatrix);
+
+      // then
+      expect(nextGeneration).to.deep.equal([
+        ['.', '.', '.'],
+        ['.', '.', '.'],
+        ['.', '.', '.'],
+      ]);
+    });
   });
 
-  it('should count alive cell from a cell list', () => {
-    // given
-    const cells = ['.', '.', '.', '.', '*'];
+  describe('#countAliveCells', function() {
 
-    // when
-    const result = countAliveCells(cells);
+    it('should count alive cells from a cell list', () => {
+      // given
+      const cells = ['.', '*', '.', '*', '*'];
 
-    // then
-    expect(result).to.equal(1);
-  });
+      // when
+      const result = countAliveCells(cells);
 
-  it('should count no alive cell from a cell list', () => {
-    // given
-    const cells = ['.', '.', '.', '.', '.'];
+      // then
+      expect(result).to.equal(3);
+    });
 
-    // when
-    const result = countAliveCells(cells);
+    it('should count alive cell from a cell list', () => {
+      // given
+      const cells = ['.', '.', '.', '.', '*'];
 
-    // then
-    expect(result).to.equal(0);
+      // when
+      const result = countAliveCells(cells);
+
+      // then
+      expect(result).to.equal(1);
+    });
+
+    it('should count no alive cell from a cell list', () => {
+      // given
+      const cells = ['.', '.', '.', '.', '.'];
+
+      // when
+      const result = countAliveCells(cells);
+
+      // then
+      expect(result).to.equal(0);
+    });
   });
 
   describe('#countAliveNeighbours', function () {
