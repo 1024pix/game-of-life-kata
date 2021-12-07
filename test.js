@@ -23,7 +23,12 @@ function calculateNextGeneration(cellMatrix) {
     for (let j = 0; j < cellMatrix[i].length; j++) {
       const cell = cellMatrix[i][j];
       const aliveNeighbours = countAliveNeighbours(cellMatrix, i, j);
+
       if (cell === '*' && aliveNeighbours < 2) {
+        newCellMatrix[i][j] = '.';
+      }
+
+      if (cell === '*' && aliveNeighbours > 3) {
         newCellMatrix[i][j] = '.';
       }
     }
@@ -87,6 +92,25 @@ describe('game of life', function () {
         ['.', '.', '.'],
         ['.', '.', '.'],
         ['.', '.', '.'],
+      ]);
+    });
+
+    it('verifies rule 2', function() {
+      // given
+      const cellMatrix = [
+        ['.', '*', '.'],
+        ['*', '*', '*'],
+        ['.', '*', '.'],
+      ];
+
+      // when
+      const nextGeneration = calculateNextGeneration(cellMatrix);
+
+      // then
+      expect(nextGeneration).to.deep.equal([
+        ['.', '*', '.'],
+        ['*', '.', '*'],
+        ['.', '*', '.'],
       ]);
     });
   });
