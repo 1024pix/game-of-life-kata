@@ -139,24 +139,24 @@ describe('game of life', function () {
       ]);
     });
 
-    // it('verifies rule 4', function() {
-    //   // given
-    //   const cellMatrix = [
-    //     ['.', '*', '.'],
-    //     ['.', '.', '*'],
-    //     ['.', '*', '.'],
-    //   ];
-    //
-    //   // when
-    //   const nextGeneration = calculateNextGeneration(cellMatrix);
-    //
-    //   // then
-    //   expect(nextGeneration).to.deep.equal([
-    //     ['.', '*', '.'],
-    //     ['.', '*', '*'],
-    //     ['.', '*', '.'],
-    //   ]);
-    // });
+    it('verifies rule 4', function() {
+      // given
+      const cellMatrix = [
+        ['.', '*', '.'],
+        ['.', '.', '*'],
+        ['.', '*', '.'],
+      ];
+
+      // when
+      const nextGeneration = calculateNextGeneration(cellMatrix);
+
+      // then
+      expect(nextGeneration).to.deep.equal([
+        ['.', '*', '.'],
+        ['.', '*', '*'],
+        ['.', '*', '.'],
+      ]);
+    });
   });
 
   describe('#countAliveCells', function() {
